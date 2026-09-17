@@ -1,0 +1,55 @@
+{
+  "project": "Arroko Control - Cliente 360 y bóveda de contactos",
+  "status": "production-foundation",
+  "entities": [
+    {
+      "name": "arroko_clients",
+      "owner": "CRM",
+      "purpose": "Identidad operativa, frecuencia, valor y segmentación sin PII cruda"
+    },
+    {
+      "name": "arroko_contact_vault",
+      "owner": "Edge Functions",
+      "purpose": "Teléfono, Instagram y cumpleaños cifrados y recuperables"
+    },
+    {
+      "name": "arroko_visits",
+      "owner": "Check-in",
+      "purpose": "Visitas NFC, QR, mesa y campañas"
+    },
+    {
+      "name": "arroko_visit_orders",
+      "owner": "Conector Soft Restaurant",
+      "purpose": "Vinculación trazable de visita con ticket"
+    },
+    {
+      "name": "arroko_pii_access_audit",
+      "owner": "Seguridad",
+      "purpose": "Auditoría de cada lectura o uso de datos de contacto"
+    }
+  ],
+  "relations": [
+    "arroko_clients 1:1 arroko_contact_vault",
+    "arroko_clients 1:N arroko_visits",
+    "arroko_visits N:1 arroko_orders mediante arroko_visit_orders",
+    "arroko_clients 1:N arroko_pii_access_audit"
+  ],
+  "integration_dependencies": [
+    "Supabase Auth y org_members",
+    "ARROKO_PII_ENCRYPTION_KEY en Supabase Secrets",
+    "arroko-public-experience para captura",
+    "arroko-crm-contact-vault para lectura auditada",
+    "Conector Soft Restaurant pendiente para tickets reales"
+  ],
+  "approval_gates": [
+    "No enviar campañas sin consentimiento marketing_whatsapp vigente",
+    "No exponer la bóveda por REST a anon o authenticated",
+    "Limitar lectura de contacto completo a roles admin y owner",
+    "Registrar actor, propósito y cliente en cada acceso"
+  ],
+  "test_data_plan": {
+    "prefix": "QA Codex",
+    "contains_real_pii": false,
+    "cleanup_required": true
+  }
+}

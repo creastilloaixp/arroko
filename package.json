@@ -1,0 +1,45 @@
+{
+  "name": "arroko-experience",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "prebuild": "node scripts/build-crm-runtime-config.mjs",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@google/genai": "^1.27.0",
+    "@radix-ui/react-avatar": "^1.1.11",
+    "@radix-ui/react-scroll-area": "^1.2.10",
+    "@radix-ui/react-slot": "^1.2.4",
+    "@supabase/supabase-js": "^2.81.1",
+    "@types/three": "^0.183.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.23.24",
+    "html2canvas": "^1.4.1",
+    "html5-qrcode": "2.3.8",
+    "lucide-react": "^0.554.0",
+    "qrcode.react": "^4.2.0",
+    "react": "^19.2.0",
+    "react-confetti": "^6.2.2",
+    "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
+    "tailwind-merge": "^3.4.0",
+    "three": "^0.183.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.17",
+    "@tailwindcss/vite": "^4.1.17",
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "autoprefixer": "^10.4.22",
+    "tailwindcss": "^4.1.17",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}

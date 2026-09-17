@@ -1,0 +1,8 @@
+{
+  "name": "IKU Sushi Roulette",
+  "description": "An elegant prize roulette system for IKU Sushi customers. Register, spin the wheel, and win exclusive prizes redeemable via a unique QR code.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

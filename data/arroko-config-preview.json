@@ -1,0 +1,261 @@
+{
+  "name": "Roko",
+  "client": "Arroko Cocina Oriental y Sushi",
+  "tagline": "Tu antojo, bien acompañado",
+  "menu_title": "Menú · Arroko",
+  "brand": {
+    "primary": "#F15B43",
+    "dark": "#0B4F56",
+    "accent": "#F4EBDD"
+  },
+  "voice": "cedar",
+  "voice_engine": "gemini",
+  "voice_gemini": "Puck",
+  "realtime_model": "gpt-realtime-2.1",
+  "brain_model": "google/gemini-2.5-flash",
+  "greeting": "¡Qué rollo! Soy Roko. Dime qué se te antoja y te armo una recomendación con maridaje.",
+  "skills": ["sales"],
+  "safety": "food",
+  "food_safety": {
+    "allergen_notice": "Ingredientes y preparación pueden cambiar. Confirma alérgenos y contaminación cruzada directamente con Arroko antes de ordenar.",
+    "never_claim_allergen_free": true
+  },
+  "commerce": {
+    "mode": "demo_whatsapp_handoff",
+    "provider": "none",
+    "currency": "mxn",
+    "live_payments": false,
+    "approvalRequiredFor": ["availability", "delivery", "mocktail_recipe", "payment_link"]
+  },
+  "cta": {
+    "label": "Confirmar con Arroko",
+    "whatsapp": "526673186010"
+  },
+  "notify": {
+    "whatsapp": "526673186010",
+    "negocio": "Arroko · propuesta de demo",
+    "cierre": "Pedido generado en demostración: confirmar disponibilidad, total, entrega y pago con Arroko."
+  },
+  "face_mode": "image",
+  "companion": "/agent/assets/arroko/roko-avatar-v5.png",
+  "face": {
+    "type": "image",
+    "framing": "body",
+    "fallback_image": "/agent/assets/arroko/roko-avatar-v5.png",
+    "rive": {
+      "planned": true,
+      "state_machine": "ArrokoHost",
+      "spec": "public/identity/arroko/rive-avatar-spec.md"
+    }
+  },
+  "stickers": {
+    "greeting": "🍙",
+    "show": "🍣",
+    "cart": "🥢",
+    "pay": "✓",
+    "shop": "🥡",
+    "idle": ["🍙", "🔥", "🥢", "✨"]
+  },
+  "persona": "Eres Roko, el anfitrión digital de Arroko Cocina Oriental y Sushi en Culiacán. Hablas en español mexicano, cálido, directo y con energía culichi ligera, sin forzar modismos. Responde en una o dos frases y haz una sola pregunta por turno. Primero entiende si la persona busca algo fresco, cremoso, crujiente, picante o para compartir. Usa únicamente productos, descripciones y precios registrados. Horario público: todos los días de 1:00 p. m. a 10:00 p. m.; teléfonos públicos: 667 318 6010 y 667 308 0800. Antes de cerrar confirma disponibilidad, entrega y total con el restaurante. Si se menciona alergia o intolerancia, detén recomendaciones y pide confirmar ingredientes, preparación y contaminación cruzada directamente con Arroko. SOMMELIER INTELIGENTE: después de asegurar un platillo, recomienda exactamente UN mocktail compatible mediante marida_con y explica en una sola frase cómo acidez, frescura, burbuja o amargor equilibran grasa, picante o dulzor. Los mocktails de este config son conceptos de demostración pendientes de validación por la barra de Arroko: dilo antes de agregarlos y nunca los presentes como parte vigente del menú. Si el cliente rechaza la bebida, no insistas. Este agente prepara carrito y handoff; no confirma cobros ni genera un enlace de pago hasta conectar y aprobar la cuenta Stripe propia de Arroko.",
+  "catalog": [
+    {
+      "id": "arroko_especial",
+      "emoji": "🍣",
+      "name": "Arroko Especial",
+      "price": 215,
+      "cat": "Especiales",
+      "desc": "Empanizado con Philadelphia, aguacate, pepino, res, camarón y tocino; gratinado, Tampico especial y camarón empanizado spicy.",
+      "pitch": "El rollo insignia: cremoso, crujiente, picante y abundante.",
+      "sensory": ["cremoso", "crujiente", "picante", "umami"],
+      "kw": ["arroko especial", "especial", "empanizado", "spicy"]
+    },
+    {
+      "id": "alex_roll",
+      "emoji": "🍗",
+      "name": "Alex Roll",
+      "price": 125,
+      "cat": "Kids y favoritos",
+      "desc": "Empanizado con Philadelphia, aguacate, Tampico y proteína a elegir; coronado con tiras de nuggets, salsa fuji y salsa de anguila.",
+      "pitch": "Crujiente, cremoso y dulce-salado; muy fácil de compartir.",
+      "sensory": ["crujiente", "cremoso", "dulce-salado"],
+      "kw": ["alex roll", "nuggets", "empanizado"]
+    },
+    {
+      "id": "salmon_imperial",
+      "emoji": "🐟",
+      "name": "Salmón Imperial",
+      "price": 205,
+      "cat": "Especiales",
+      "desc": "Natural con camarón empanizado, salmón y aguacate; ensalada Kany, camarón capeado spicy y twist de limón.",
+      "pitch": "Fresco al inicio y crujiente al final, con picante moderado.",
+      "sensory": ["fresco", "cremoso", "picante", "crujiente"],
+      "kw": ["salmon imperial", "salmón", "natural"]
+    },
+    {
+      "id": "nixi",
+      "emoji": "🌸",
+      "name": "Nixi",
+      "price": 240,
+      "cat": "Especiales",
+      "desc": "Natural, forrado con alga de soya rosa; salmón, camarón empanizado, kanikama spicy, jengibre, cilantro y chili oil.",
+      "pitch": "El más visual: fresco, aromático, especiado y con textura.",
+      "sensory": ["fresco", "aromático", "picante", "crujiente"],
+      "kw": ["nixi", "alga rosa", "salmón", "chili oil"]
+    },
+    {
+      "id": "kraken",
+      "emoji": "🐙",
+      "name": "Kraken",
+      "price": 220,
+      "cat": "Especiales",
+      "desc": "Natural con camarón adobado, ensalada Kany y trozos de pulpo; limón, sriracha y salsa de anguila.",
+      "pitch": "Marino, intenso y ligeramente picante.",
+      "sensory": ["marino", "picante", "ácido", "umami"],
+      "kw": ["kraken", "pulpo", "camarón", "natural"]
+    },
+    {
+      "id": "avocado_prime",
+      "emoji": "🥑",
+      "name": "Avocado Prime",
+      "price": 270,
+      "cat": "Especiales",
+      "desc": "Sin arroz, forrado en papel arroz con aguacate, pepino, camarón y topping de salmón spicy.",
+      "pitch": "Más fresco y ligero de arroz, con aguacate cremoso y salmón spicy.",
+      "sensory": ["fresco", "cremoso", "picante", "ligero"],
+      "kw": ["avocado prime", "sin arroz", "aguacate", "salmón"]
+    },
+    {
+      "id": "pollo_tropical",
+      "emoji": "🥭",
+      "name": "Pollo Tropical",
+      "price": 220,
+      "cat": "Del wok",
+      "desc": "Pollo crujiente con salsa agridulce de mango, vegetales y un ligero toque picante.",
+      "pitch": "Agridulce, crujiente y tropical.",
+      "sensory": ["dulce", "crujiente", "picante", "frutal"],
+      "kw": ["pollo tropical", "mango", "wok"]
+    },
+    {
+      "id": "pollo_mongol",
+      "emoji": "🌶️",
+      "name": "Pollo Mongol",
+      "price": 190,
+      "cat": "Del wok",
+      "desc": "Pollo en salsa espesa salada y dulce, vegetales y chile de árbol.",
+      "pitch": "Profundo, dulce-salado y ligeramente picante.",
+      "sensory": ["dulce-salado", "picante", "umami"],
+      "kw": ["pollo mongol", "wok", "chile de árbol"]
+    },
+    {
+      "id": "camarones_roca",
+      "emoji": "🦐",
+      "name": "Camarones Roca",
+      "price": 160,
+      "cat": "Campo y mar",
+      "desc": "Camarones crujientes con aderezo cremoso spicy, cebollín, ajonjolí y salsa de anguila.",
+      "pitch": "Crujiente, cremoso y spicy.",
+      "sensory": ["crujiente", "cremoso", "picante", "umami"],
+      "kw": ["camarones roca", "camarón", "spicy"]
+    },
+    {
+      "id": "aguachile_mango_habanero",
+      "emoji": "🔥",
+      "name": "Aguachile Mango Habanero",
+      "price": 180,
+      "cat": "Campo y mar",
+      "desc": "Camarón curtido en limón y salsa de mango habanero con cebolla morada, pepino y serrano.",
+      "pitch": "Ácido, frutal y picante, para quien quiere intensidad fresca.",
+      "sensory": ["ácido", "fresco", "frutal", "picante"],
+      "kw": ["aguachile", "mango habanero", "camarón"]
+    },
+    {
+      "id": "yakimeshi_ko",
+      "emoji": "🍚",
+      "name": "Yakimeshi Kō",
+      "price": 220,
+      "cat": "Arroces",
+      "desc": "Arroz frito con proteína, vegetales, kanikama, camarones empanizados, Philadelphia, aguacate y salsa de anguila.",
+      "pitch": "Una comida completa, abundante y muy umami.",
+      "sensory": ["umami", "cremoso", "crujiente", "abundante"],
+      "kw": ["yakimeshi ko", "arroz", "camarón"]
+    },
+    {
+      "id": "rollitos_cajon",
+      "emoji": "🥢",
+      "name": "Rollitos de Cajón",
+      "price": 120,
+      "cat": "Entradas",
+      "desc": "Rollos con Philadelphia, queso Chihuahua, salsas orientales y proteína a elegir; acompañados de salsa agridulce.",
+      "pitch": "Entrada crujiente para compartir.",
+      "sensory": ["crujiente", "cremoso", "agridulce"],
+      "kw": ["rollitos", "entrada", "compartir"]
+    },
+    {
+      "id": "mocktail_yuzu_culichi",
+      "emoji": "🍋",
+      "name": "Yuzu Culichi · concepto",
+      "price": 85,
+      "cat": "Laboratorio de maridaje",
+      "desc": "Concepto sin alcohol: yuzu, té verde frío y agua mineral. Receta y precio pendientes de validación por Arroko.",
+      "pitch": "La acidez y burbuja limpian preparaciones empanizadas y cremosas sin sumar dulzor.",
+      "marida_con": ["arroko_especial", "alex_roll", "yakimeshi_ko"],
+      "proposal": true,
+      "kw": ["yuzu", "mocktail", "sin alcohol", "maridaje"]
+    },
+    {
+      "id": "mocktail_brisa_maviri",
+      "emoji": "🥒",
+      "name": "Brisa Maviri · concepto",
+      "price": 85,
+      "cat": "Laboratorio de maridaje",
+      "desc": "Concepto sin alcohol: pepino, limón, hierbabuena y mineral. Receta y precio pendientes de validación por Arroko.",
+      "pitch": "La frescura acompaña pescados y aguacate, y baja la sensación de picante entre bocados.",
+      "marida_con": ["salmon_imperial", "nixi", "avocado_prime", "aguachile_mango_habanero"],
+      "proposal": true,
+      "kw": ["pepino", "mocktail", "sin alcohol", "maridaje"]
+    },
+    {
+      "id": "mocktail_tamarindo_togarashi",
+      "emoji": "🌶️",
+      "name": "Tamarindo Togarashi · concepto",
+      "price": 85,
+      "cat": "Laboratorio de maridaje",
+      "desc": "Concepto sin alcohol: tamarindo seco, limón, soda y escarchado de togarashi. Receta y precio pendientes de validación.",
+      "pitch": "Su acidez hace eco de las salsas agridulces y su final seco evita que el wok se vuelva pesado.",
+      "marida_con": ["pollo_tropical", "pollo_mongol", "rollitos_cajon"],
+      "proposal": true,
+      "kw": ["tamarindo", "mocktail", "sin alcohol", "maridaje"]
+    },
+    {
+      "id": "mocktail_tonica_marina",
+      "emoji": "🫧",
+      "name": "Tónica Marina · concepto",
+      "price": 85,
+      "cat": "Laboratorio de maridaje",
+      "desc": "Concepto sin alcohol: toronja, tónica, sal cítrica y romero. Receta y precio pendientes de validación.",
+      "pitch": "El amargor y la toronja recortan el aderezo spicy y refrescan sabores marinos intensos.",
+      "marida_con": ["kraken", "camarones_roca"],
+      "proposal": true,
+      "kw": ["toronja", "tónica", "mocktail", "sin alcohol", "maridaje"]
+    }
+  ],
+  "modules": {
+    "marketplace": true,
+    "smart_sommelier": true,
+    "sensory_profile": true,
+    "pitch_mode": true
+  },
+  "voice_mode": "realtime",
+  "realtime_fallback": "turnos",
+  "tts": true,
+  "source_policy": {
+    "type": "public_menu_proposal",
+    "checked_at": "2026-09-10",
+    "sources": [
+      "https://www.instagram.com/arrokomx/",
+      "https://myqrcode.mobi/b696a1c8"
+    ],
+    "notes": "Platillos y precios provienen del menú digital público. Mocktails, avatar e interacción son propuesta Creastilo pendiente de aprobación del restaurante."
+  },
+  "_status": "Variante avanzada de demostración. Catálogo público verificado; cobro y mocktails no activos hasta aprobación de Arroko."
+}

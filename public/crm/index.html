@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <base href="/crm/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#073f43">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Prototipo funcional del centro de control Arroko.">
+  <title>Arroko Control — CRM operativo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<!--
+THESIS: Arroko convierte señales dispersas en decisiones trazables; evita el mosaico SaaS sin jerarquía.
+OWN-WORLD: verde petróleo nocturno, coral de empaque, crema arroz y controles de pase de cocina.
+STORY: gerencia ve qué cambió, abre la evidencia y aprueba una acción sin perder contexto.
+FIRST VIEWPORT: riel de marca, tres decisiones prioritarias, pulso horario y resultado del día; conexión visible arriba.
+FORM: mesa de decisiones, tercera estructura del listado; staging por flujo señal → evidencia → decisión; seed e71513b7.
+-->
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="m21 8-9 5-9-5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l2.5-7 5 14 2.5-7h4"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20V7"/></symbol>
+    <symbol id="i-megaphone" viewBox="0 0 24 24"><path d="m3 11 15-6v14L3 13zM11 16l1.5 5H8l-2-7"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M14 7l5 5-5 5"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.15 1.15M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.15-1.15"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 1.4 4.6L18 9l-4.6 1.4L12 15l-1.4-4.6L6 9l4.6-1.4zM19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 7v6l-4 2v-8z"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 20h16"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Navegación principal">
+      <button class="brand" type="button" data-route="dashboard" aria-label="Ir al resumen">
+        <span class="brand-mark">A</span>
+        <span><strong>ARROKO</strong><small>CONTROL</small></span>
+      </button>
+
+      <div class="location-select">
+        <span class="location-dot"></span>
+        <span><small>Sucursal</small><strong>Arroko Centro</strong></span>
+        <svg><use href="#i-chevron"/></svg>
+      </div>
+
+      <nav class="main-nav">
+        <button class="nav-item active" type="button" data-route="dashboard"><svg><use href="#i-home"/></svg><span>Resumen</span></button>
+        <button class="nav-item" type="button" data-route="clientes"><svg><use href="#i-users"/></svg><span>Clientes</span><b>2</b></button>
+        <button class="nav-item" type="button" data-route="insumos"><svg><use href="#i-box"/></svg><span>Insumos</span><b class="warn">4</b></button>
+        <button class="nav-item" type="button" data-route="operacion"><svg><use href="#i-activity"/></svg><span>Operación</span></button>
+        <button class="nav-item" type="button" data-route="reporteria"><svg><use href="#i-chart"/></svg><span>Reportería</span></button>
+        <button class="nav-item" type="button" data-route="campanas"><svg><use href="#i-megaphone"/></svg><span>Campañas</span><b class="coral">1</b></button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="integration-card" id="openIntegration" type="button">
+          <span class="integration-icon"><svg><use href="#i-link"/></svg></span>
+          <span><small>Soft Restaurant</small><strong>Listo para conectar</strong></span>
+          <i></i>
+        </button>
+        <div class="user-card">
+          <span class="user-avatar">CM</span>
+          <span><strong>Gerencia Arroko</strong><small>Administrador</small></span>
+          <button type="button" aria-label="Abrir perfil">•••</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <div class="mobile-brand"><button type="button" data-route="dashboard">A</button><strong>ARROKO CONTROL</strong></div>
+        <label class="searchbox">
+          <svg><use href="#i-search"/></svg>
+          <span class="sr-only">Buscar</span>
+          <input id="globalSearch" type="search" placeholder="Busca clientes, insumos o campañas…" autocomplete="off">
+          <kbd>⌘ K</kbd>
+        </label>
+        <div class="topbar-actions">
+          <button class="demo-pill data-source-pill" id="dataSourceButton" type="button">Conectando…</button>
+          <button class="date-button" type="button" id="dateButton"><svg><use href="#i-clock"/></svg><span>Últimos 7 días</span><svg><use href="#i-chevron"/></svg></button>
+          <button class="icon-button notification-button" type="button" aria-label="Notificaciones"><svg><use href="#i-bell"/></svg><i></i></button>
+        </div>
+      </header>
+
+      <div class="view-container" id="viewContainer">
+        <section class="view active" id="view-dashboard" data-title="Resumen">
+          <div class="page-heading">
+            <div><span class="eyebrow">Jueves · 10 septiembre</span><h1>Hoy hay tres decisiones.</h1><p>Roko cruzó operación, inventario y pauta para ordenar lo importante.</p></div>
+            <button class="primary-button" type="button" id="openRoko"><svg><use href="#i-spark"/></svg>Preguntarle a Roko</button>
+          </div>
+
+          <div class="decision-layout">
+            <section class="decision-queue" aria-labelledby="decisionsTitle">
+              <div class="section-heading"><div><span class="section-kicker">Prioridad</span><h2 id="decisionsTitle">Mesa de decisiones</h2></div><span class="queue-count">3 abiertas</span></div>
+
+              <article class="decision-card critical">
+                <div class="decision-index">01</div>
+                <div class="decision-copy"><div class="decision-meta"><span>INSUMOS</span><time>Hace 18 min</time></div><h3>El salmón alcanza para 34 servicios</h3><p>El consumo va 22% arriba del jueves promedio. Mantener la venta podría agotar existencias antes de las 20:30.</p><div class="evidence"><span><b>8.4 kg</b> disponibles</span><span><b>2.1 kg</b> comprometidos</span></div></div>
+                <div class="decision-action"><button type="button" data-jump="insumos">Ver evidencia <svg><use href="#i-arrow"/></svg></button><small>Recomendación</small><strong>Preparar compra</strong></div>
+              </article>
+
+              <article class="decision-card opportunity">
+                <div class="decision-index">02</div>
+                <div class="decision-copy"><div class="decision-meta"><span>CAMPAÑAS</span><time>Hace 42 min</time></div><h3>“Comida Godín” sí está vendiendo</h3><p>La campaña atribuye 18 pedidos y mantiene un retorno de 4.8×. Todavía tiene capacidad operativa entre 14:30 y 16:30.</p><div class="evidence"><span><b>$1,840</b> invertidos</span><span><b>$8,920</b> venta atribuida</span></div></div>
+                <div class="decision-action"><button type="button" data-jump="campanas">Revisar pauta <svg><use href="#i-arrow"/></svg></button><small>Recomendación</small><strong>Extender 3 días</strong></div>
+              </article>
+
+              <article class="decision-card attention">
+                <div class="decision-index">03</div>
+                <div class="decision-copy"><div class="decision-meta"><span>CLIENTES</span><time>Hoy, 09:12</time></div><h3>27 clientes frecuentes dejaron de volver</h3><p>Compraron tres o más veces, pero no registran visita en 45 días. Su ticket histórico promedio es de $486.</p><div class="evidence"><span><b>27</b> recuperables</span><span><b>$13,122</b> valor de una visita</span></div></div>
+                <div class="decision-action"><button type="button" data-jump="clientes">Abrir segmento <svg><use href="#i-arrow"/></svg></button><small>Recomendación</small><strong>Crear recuperación</strong></div>
+              </article>
+            </section>
+
+            <aside class="daily-pulse">
+              <div class="pulse-header"><span>VENTA NETA · HOY</span><small>vs. jueves anterior</small></div>
+              <div class="revenue-row"><strong>$38,460</strong><span>↗ 12.4%</span></div>
+              <div class="pulse-chart" aria-label="Ventas por hora de 13 a 22 horas">
+                <div class="now-line"><span>Ahora</span></div>
+                <div class="bars">
+                  <i style="--h:24%"></i><i style="--h:43%"></i><i style="--h:69%"></i><i style="--h:83%"></i><i style="--h:58%"></i><i class="future" style="--h:76%"></i><i class="future" style="--h:88%"></i><i class="future" style="--h:64%"></i><i class="future" style="--h:38%"></i>
+                </div>
+                <div class="chart-labels"><span>13h</span><span>16h</span><span>19h</span><span>22h</span></div>
+              </div>
+              <div class="pulse-stats"><div><small>Pedidos</small><strong>126</strong></div><div><small>Ticket</small><strong>$305</strong></div><div><small>Margen est.</small><strong>34.2%</strong></div></div>
+              <div class="channel-mix"><div class="section-heading compact"><h3>Origen de venta</h3><button type="button" data-jump="reporteria">Detalle</button></div><div class="mix-bar"><i style="--w:48%"></i><i style="--w:29%"></i><i style="--w:23%"></i></div><ul><li><i></i>Mostrador <b>48%</b></li><li><i></i>Delivery <b>29%</b></li><li><i></i>WhatsApp <b>23%</b></li></ul></div>
+            </aside>
+          </div>
+
+          <section class="kpi-strip" aria-label="Indicadores clave">
+            <button type="button" data-jump="operacion"><span>Tiempo de preparación</span><strong>18:42 <small>min</small></strong><em class="good">↓ 2:16</em></button>
+            <button type="button" data-jump="insumos"><span>Costo de materia prima</span><strong>31.8<small>%</small></strong><em class="warn">↑ 1.3 pts</em></button>
+            <button type="button" data-jump="clientes"><span>Clientes identificados</span><strong>62<small>%</small></strong><em class="good">↑ 8 pts</em></button>
+            <button type="button" data-jump="campanas"><span>Retorno de pauta</span><strong>3.7<small>×</small></strong><em class="good">↑ 0.6×</em></button>
+          </section>
+        </section>
+
+        <section class="view" id="view-clientes" data-title="Clientes">
+          <div class="page-heading compact-heading"><div><span class="eyebrow">Relaciones que regresan</span><h1>Clientes</h1><p>Entiende frecuencia, valor y momento de cada relación.</p></div><button class="secondary-button" type="button" data-demo-action="Importación preparada"><svg><use href="#i-download"/></svg>Importar</button></div>
+          <div class="module-kpis"><article><span>Clientes identificados</span><strong id="customersTotal">2,846</strong><em id="customersTotalNote" class="positive">+8.2%</em></article><article><span>Frecuentes</span><strong id="customersFrequent">684</strong><em id="customersFrequentNote">24% de la base</em></article><article><span>En riesgo</span><strong id="customersRisk">127</strong><em id="customersRiskNote" class="negative">+18 esta semana</em></article><article><span>Ticket promedio</span><strong id="customersAverageTicket">$1,280</strong><em id="customersTicketNote">por visita vinculada</em></article></div>
+          <div class="module-grid customers-grid">
+            <section class="panel segment-panel"><div class="panel-heading"><div><span class="section-kicker">Segmentos</span><h2>Oportunidades activas</h2></div></div><button class="segment active" type="button" data-segment="all"><span><i class="seg-coral"></i>Todos los clientes</span><b id="segmentAllCount">2,846</b></button><button class="segment" type="button" data-segment="risk"><span><i class="seg-yellow"></i>Frecuentes en riesgo</span><b id="segmentRiskCount">127</b></button><button class="segment" type="button" data-segment="vip"><span><i class="seg-teal"></i>Alto valor</span><b id="segmentVipCount">216</b></button><button class="segment" type="button" data-segment="new"><span><i class="seg-cream"></i>Primera visita</span><b id="segmentNewCount">384</b></button><div class="segment-insight"><span>Oportunidad estimada</span><strong id="segmentOpportunity">$61,722</strong><p id="segmentOpportunityNote">Si los clientes en riesgo realizan una visita con su ticket histórico.</p><button type="button" data-demo-action="Campaña de recuperación preparada">Preparar recuperación</button></div></section>
+            <section class="panel table-panel"><div class="table-toolbar"><label><svg><use href="#i-search"/></svg><input id="customerSearch" type="search" placeholder="Buscar cliente…"></label><button type="button"><svg><use href="#i-filter"/></svg>Filtrar</button></div><div class="table-scroll"><table><thead><tr><th>Cliente</th><th>Última visita</th><th>Visitas</th><th>Ticket prom.</th><th>Estado</th><th></th></tr></thead><tbody id="customerRows"></tbody></table></div></section>
+          </div>
+        </section>
+
+        <section class="view" id="view-insumos" data-title="Insumos">
+          <div class="page-heading compact-heading"><div><span class="eyebrow">Del inventario al margen</span><h1>Insumos</h1><p>Existencias, consumo y costo teórico en una sola vista.</p></div><button class="primary-button" type="button" data-demo-action="Conteo de inventario iniciado"><svg><use href="#i-plus"/></svg>Nuevo conteo</button></div>
+          <div class="inventory-banner"><div><span class="status-orb warn"></span><div><strong>4 insumos requieren atención</strong><p>Dos podrían agotarse durante el turno de hoy.</p></div></div><button type="button" id="showCriticalStock">Ver solamente críticos</button></div>
+          <div class="module-grid inventory-grid"><section class="panel table-panel"><div class="table-toolbar"><div class="filter-tabs" id="stockTabs"><button class="active" type="button" data-stock="all">Todos</button><button type="button" data-stock="critical">Críticos</button><button type="button" data-stock="watch">Vigilar</button><button type="button" data-stock="healthy">Saludables</button></div><button type="button"><svg><use href="#i-download"/></svg>Exportar</button></div><div class="table-scroll"><table><thead><tr><th>Insumo</th><th>Existencia</th><th>Cobertura</th><th>Costo</th><th>Variación</th><th>Estado</th></tr></thead><tbody id="inventoryRows"></tbody></table></div></section><aside class="panel waste-panel"><div class="panel-heading"><div><span class="section-kicker">Semana</span><h2>Merma registrada</h2></div><strong>$2,184</strong></div><div class="waste-ring"><div><span>1.8%</span><small>de compra</small></div></div><ol><li><span>Salmón</span><b>$684</b></li><li><span>Aguacate</span><b>$512</b></li><li><span>Camarón</span><b>$438</b></li><li><span>Otros</span><b>$550</b></li></ol><button type="button" data-demo-action="Registro de merma abierto">Registrar merma</button></aside></div>
+        </section>
+
+        <section class="view" id="view-operacion" data-title="Operación">
+          <div class="page-heading compact-heading"><div><span class="eyebrow">Turno en vivo</span><h1>Operación</h1><p>Demanda, tiempos y excepciones del servicio actual.</p></div><div class="live-badge"><i></i>Actualizando cada minuto</div></div>
+          <div class="module-kpis"><article><span>Pedidos activos</span><strong>18</strong><em>6 en cocina</em></article><article><span>Preparación promedio</span><strong>18:42</strong><em class="positive">−2:16 min</em></article><article><span>Entrega a tiempo</span><strong>91.4%</strong><em class="positive">+3.1 pts</em></article><article><span>Incidencias</span><strong>3</strong><em class="negative">1 requiere acción</em></article></div>
+          <section class="panel flow-panel"><div class="panel-heading"><div><span class="section-kicker">Flujo actual</span><h2>Del pedido a la entrega</h2></div><span>18 pedidos</span></div><div class="order-flow"><div><header><span>Recibidos</span><b>4</b></header><article><strong>#1842 · Mostrador</strong><small>Hace 02:14 · $420</small></article><article><strong>#1844 · WhatsApp</strong><small>Hace 00:48 · $680</small></article></div><i></i><div><header><span>En preparación</span><b>6</b></header><article class="alert"><strong>#1834 · Delivery</strong><small>24:18 · $315</small></article><article><strong>#1837 · Mostrador</strong><small>16:02 · $540</small></article></div><i></i><div><header><span>Por entregar</span><b>5</b></header><article><strong>#1828 · Delivery</strong><small>Listo hace 03:12</small></article><article><strong>#1831 · Mostrador</strong><small>Listo hace 01:44</small></article></div><i></i><div><header><span>Completados</span><b>93</b></header><article class="complete"><strong>#1826 · WhatsApp</strong><small>Entregado · 17:26</small></article><article class="complete"><strong>#1827 · Mostrador</strong><small>Entregado · 16:48</small></article></div></div></section>
+          <div class="module-grid ops-bottom"><section class="panel"><div class="panel-heading"><div><span class="section-kicker">Demanda</span><h2>Capacidad por hora</h2></div><span class="status-text good">Dentro de capacidad</span></div><div class="capacity-chart"><div class="capacity-area"></div><div class="capacity-limit">Capacidad recomendada</div><div class="capacity-bars"><i style="--h:35%"></i><i style="--h:52%"></i><i style="--h:74%"></i><i style="--h:82%"></i><i style="--h:68%"></i><i style="--h:91%"></i><i style="--h:78%"></i></div></div></section><section class="panel incident-panel"><div class="panel-heading"><div><span class="section-kicker">Excepciones</span><h2>Incidencias</h2></div><span>3 hoy</span></div><article><i class="critical-dot"></i><div><strong>Pedido #1834 excedió 20 min</strong><small>Cocina · hace 4 min</small></div><button type="button" data-resolve>Resolver</button></article><article><i class="warn-dot"></i><div><strong>Repartidor esperando pedido #1828</strong><small>Entrega · hace 3 min</small></div><button type="button" data-resolve>Resolver</button></article><article><i class="info-dot"></i><div><strong>Tiempo de empaque arriba de meta</strong><small>Empaque · hace 18 min</small></div><button type="button" data-resolve>Resolver</button></article></section></div>
+        </section>
+
+        <section class="view" id="view-reporteria" data-title="Reportería">
+          <div class="page-heading compact-heading"><div><span class="eyebrow">Una sola versión del negocio</span><h1>Reportería</h1><p>Ventas, margen y mezcla para entender qué está funcionando.</p></div><button class="secondary-button" type="button" data-demo-action="Reporte ejecutivo exportado"><svg><use href="#i-download"/></svg>Exportar reporte</button></div>
+          <div class="report-hero"><div><span>VENTA NETA · 4–10 SEP</span><strong>$248,630</strong><p><b>↗ 8.6%</b> contra los siete días anteriores</p></div><div class="report-switch" id="reportSwitch"><button class="active" type="button" data-metric="sales">Venta</button><button type="button" data-metric="orders">Pedidos</button><button type="button" data-metric="ticket">Ticket</button></div></div>
+          <section class="panel report-chart-panel"><div class="chart-y"><span>$50k</span><span>$25k</span><span>$0</span></div><svg class="line-chart" viewBox="0 0 760 250" role="img" aria-label="Venta diaria de jueves a miércoles"><defs><linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f15b43" stop-opacity=".36"/><stop offset="1" stop-color="#f15b43" stop-opacity="0"/></linearGradient></defs><path class="grid" d="M0 30H760M0 125H760M0 220H760"/><path id="areaPath" class="area" d="M0 178 C70 152 90 92 150 108 S250 166 305 122 S390 64 455 80 S560 135 610 94 S700 32 760 54 V220H0Z"/><path id="linePath" class="line" d="M0 178 C70 152 90 92 150 108 S250 166 305 122 S390 64 455 80 S560 135 610 94 S700 32 760 54"/><g class="dots"><circle cx="0" cy="178" r="4"/><circle cx="150" cy="108" r="4"/><circle cx="305" cy="122" r="4"/><circle cx="455" cy="80" r="4"/><circle cx="610" cy="94" r="4"/><circle cx="760" cy="54" r="5"/></g></svg><div class="chart-x"><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span><span>Lun</span><span>Mar</span><span>Mié</span></div></section>
+          <div class="module-grid report-bottom"><section class="panel product-panel"><div class="panel-heading"><div><span class="section-kicker">Producto</span><h2>Qué está moviendo la venta</h2></div><button type="button">Ver todos</button></div><div class="product-row"><span>1</span><div><strong>Arroko Especial</strong><small>142 unidades</small></div><b>$30,530</b><em>12.3%</em></div><div class="product-row"><span>2</span><div><strong>Avocado Prime</strong><small>96 unidades</small></div><b>$25,920</b><em>10.4%</em></div><div class="product-row"><span>3</span><div><strong>Nixi</strong><small>101 unidades</small></div><b>$24,240</b><em>9.7%</em></div><div class="product-row"><span>4</span><div><strong>Yakimeshi Kō</strong><small>84 unidades</small></div><b>$18,480</b><em>7.4%</em></div></section><section class="panel margin-panel"><div class="panel-heading"><div><span class="section-kicker">Rentabilidad</span><h2>Puente de margen</h2></div></div><div class="margin-row"><span>Venta neta</span><b>$248,630</b></div><div class="margin-row cost"><span>Materia prima</span><b>−$79,066</b></div><div class="margin-row cost"><span>Comisiones</span><b>−$21,840</b></div><div class="margin-row cost"><span>Promociones</span><b>−$8,420</b></div><div class="margin-row total"><span>Contribución estimada</span><b>$139,304</b></div><small class="data-note">Estimación demostrativa; requiere costos y ventas reales de Soft Restaurant.</small></section></div>
+        </section>
+
+        <section class="view" id="view-campanas" data-title="Campañas">
+          <div class="page-heading compact-heading"><div><span class="eyebrow">De impresiones a venta</span><h1>Campañas</h1><p>Decide pauta usando gasto, pedidos atribuidos y capacidad operativa.</p></div><button class="primary-button" type="button" data-demo-action="Borrador de campaña creado"><svg><use href="#i-plus"/></svg>Nueva campaña</button></div>
+          <div class="module-kpis"><article><span>Inversión · 30 días</span><strong>$18,420</strong><em>Meta + Google</em></article><article><span>Venta atribuida</span><strong>$68,154</strong><em class="positive">3.7× retorno</em></article><article><span>Pedidos atribuidos</span><strong>184</strong><em>$100 por pedido</em></article><article><span>Decisiones pendientes</span><strong>1</strong><em class="negative">Requiere aprobación</em></article></div>
+          <div class="module-grid campaign-grid"><section class="panel table-panel"><div class="table-toolbar"><div class="filter-tabs"><button class="active" type="button">Activas</button><button type="button">Pausadas</button><button type="button">Terminadas</button></div><button type="button"><svg><use href="#i-filter"/></svg>Filtrar</button></div><div class="campaign-list"><article><span class="platform meta">M</span><div><strong>Comida Godín · Septiembre</strong><small>Meta · Conversión · Activa</small></div><span><small>Inversión</small><b>$1,840</b></span><span><small>Pedidos</small><b>18</b></span><span><small>Venta atrib.</small><b>$8,920</b></span><em class="roas good">4.8×</em><button type="button" aria-label="Ver campaña"><svg><use href="#i-chevron"/></svg></button></article><article><span class="platform google">G</span><div><strong>Sushi cerca de mí</strong><small>Google · Búsqueda · Activa</small></div><span><small>Inversión</small><b>$4,260</b></span><span><small>Pedidos</small><b>36</b></span><span><small>Venta atrib.</small><b>$13,580</b></span><em class="roas">3.2×</em><button type="button" aria-label="Ver campaña"><svg><use href="#i-chevron"/></svg></button></article><article><span class="platform meta">M</span><div><strong>Nixi · Lanzamiento</strong><small>Meta · Alcance · Activa</small></div><span><small>Inversión</small><b>$2,180</b></span><span><small>Pedidos</small><b>9</b></span><span><small>Venta atrib.</small><b>$3,120</b></span><em class="roas bad">1.4×</em><button type="button" aria-label="Ver campaña"><svg><use href="#i-chevron"/></svg></button></article></div></section><aside class="panel approval-panel"><div class="approval-top"><span><svg><use href="#i-spark"/></svg>DECISIÓN SUGERIDA</span><time>Hoy · 10:24</time></div><h2>Extender “Comida Godín” tres días</h2><p>Mantiene un retorno de 4.8× y la cocina tiene 26% de capacidad disponible durante su ventana principal.</p><dl><div><dt>Presupuesto adicional</dt><dd>$900</dd></div><div><dt>Venta estimada</dt><dd>$3,600–$4,300</dd></div><div><dt>Riesgo operativo</dt><dd class="low">Bajo</dd></div></dl><div class="approval-actions"><button class="approve" type="button" data-approve><svg><use href="#i-check"/></svg>Aprobar propuesta</button><button class="reject" type="button" data-reject>Descartar</button></div><small>No cambiaremos presupuesto sin tu aprobación.</small></aside></div>
+        </section>
+      </div>
+    </main>
+
+    <nav class="mobile-nav" aria-label="Módulos">
+      <button type="button" data-route="clientes"><svg><use href="#i-users"/></svg><span>Clientes</span></button>
+      <button type="button" data-route="insumos"><svg><use href="#i-box"/></svg><span>Insumos</span></button>
+      <button type="button" data-route="operacion"><svg><use href="#i-activity"/></svg><span>Operación</span></button>
+      <button type="button" data-route="reporteria"><svg><use href="#i-chart"/></svg><span>Reportes</span></button>
+      <button type="button" data-route="campanas"><svg><use href="#i-megaphone"/></svg><span>Campañas</span></button>
+    </nav>
+  </div>
+
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="roko-drawer" id="rokoDrawer" aria-labelledby="rokoTitle" aria-hidden="true">
+    <header><div class="roko-identity"><div class="roko-crop"><img src="../../identity/arroko/arroko-onigiri-avatar-concept-v5.png" alt="Roko, anfitrión digital de Arroko"></div><div><span>Copiloto operativo</span><h2 id="rokoTitle">Roko</h2></div></div><button class="icon-button" id="closeRoko" type="button" aria-label="Cerrar"><svg><use href="#i-x"/></svg></button></header>
+    <div class="roko-context"><span>CONTEXTO ACTUAL</span><strong id="rokoContext">Resumen del negocio</strong></div>
+    <div class="chat" id="rokoChat"><div class="message roko"><p>Ya crucé venta, inventario, operación y pauta. ¿Qué decisión quieres revisar?</p><time>Ahora</time></div></div>
+    <div class="suggestions"><button type="button">¿Qué debo resolver primero?</button><button type="button">¿Dónde estoy perdiendo margen?</button><button type="button">Resume el día para los socios</button></div>
+    <form id="rokoForm"><label><span class="sr-only">Pregunta para Roko</span><textarea id="rokoInput" rows="1" placeholder="Pregunta sobre esta vista…"></textarea></label><button type="submit" aria-label="Enviar"><svg><use href="#i-arrow"/></svg></button></form>
+    <small class="drawer-note">Respuestas demostrativas. La conexión real requiere autorización y fuentes verificadas.</small>
+  </aside>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="integrationTitle">
+      <button class="icon-button modal-close" id="closeIntegration" type="button" aria-label="Cerrar"><svg><use href="#i-x"/></svg></button>
+      <span class="modal-icon"><svg><use href="#i-link"/></svg></span><span class="section-kicker">Fuente operativa</span><h2 id="integrationTitle">Conectar Soft Restaurant</h2><p>Arroko Control está preparado para recibir ventas, productos, clientes e inventario sin escribir directamente en la base del punto de venta.</p>
+      <ol class="connection-steps"><li class="done"><i><svg><use href="#i-check"/></svg></i><span><strong>Contrato de datos</strong><small>Campos y módulos definidos</small></span></li><li class="current"><i>2</i><span><strong>Validar instalación</strong><small>Versión, servidor, sucursales y licencia</small></span></li><li><i>3</i><span><strong>Autorizar conector</strong><small>NSDeveloper, ERP/PMS o puente de lectura</small></span></li><li><i>4</i><span><strong>Conciliar información</strong><small>Prueba paralela antes de activar métricas reales</small></span></li></ol>
+      <div class="connection-policy"><strong>Regla de seguridad</strong><p>La primera etapa será solo lectura. Toda acción sensible conservará aprobación humana y bitácora.</p></div>
+      <button class="primary-button full" type="button" data-demo-action="Diagnóstico técnico preparado">Preparar diagnóstico técnico</button>
+    </section>
+  </div>
+
+  <div class="drawer-backdrop" id="customerBackdrop"></div>
+  <aside class="customer-drawer" id="customerDrawer" aria-labelledby="customerDetailTitle" aria-hidden="true">
+    <header><div><span class="section-kicker">Cliente 360</span><h2 id="customerDetailTitle">Relación con Arroko</h2></div><button class="icon-button" id="closeCustomer" type="button" aria-label="Cerrar detalle"><svg><use href="#i-x"/></svg></button></header>
+    <div id="customerDetail" class="customer-detail"><div class="detail-empty">Selecciona un cliente para ver su recorrido.</div></div>
+  </aside>
+
+  <div class="modal-backdrop" id="authBackdrop" hidden>
+    <section class="modal auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <button class="icon-button modal-close" id="closeAuth" type="button" aria-label="Cerrar"><svg><use href="#i-x"/></svg></button>
+      <span class="section-kicker">Acceso protegido</span><h2 id="authTitle">Conectar Arroko Control</h2><p>Inicia sesión con una cuenta autorizada de la organización. La llave pública del navegador nunca puede saltarse las políticas de acceso.</p>
+      <form id="authForm" class="auth-form"><label>Correo<input id="authEmail" type="email" autocomplete="username" required placeholder="gerencia@arroko.mx"></label><label>Contraseña<input id="authPassword" type="password" autocomplete="current-password" required minlength="6"></label><p id="authError" role="alert"></p><button class="primary-button full" type="submit">Entrar al CRM</button></form>
+      <button class="secondary-button full auth-logout" id="authLogout" type="button" hidden>Cerrar sesión</button>
+      <small class="data-note">Los datos infantiles se limitan a alias y rango de edad. No se almacenan teléfonos, correos ni fechas de nacimiento de menores.</small>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"><svg><use href="#i-check"/></svg><span>Acción completada</span></div>
+  <script src="./runtime-config.js"></script>
+  <script src="./data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

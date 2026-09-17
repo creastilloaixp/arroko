@@ -1,0 +1,1 @@
+window.ARROKO_CRM_CONFIG = {"supabaseUrl":"https://ctvwpzzcvgzfabbnqodq.supabase.co","supabaseAnonKey":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0dndwenpjdmd6ZmFiYm5xb2RxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NTE0NTksImV4cCI6MjA5MzUyNzQ1OX0.HZiqqfxGLPbl6IVLNfa3somPZK6rPPlYLzs698DbX5w"};

@@ -1,0 +1,26 @@
+{
+  "product": "Arrokó Rewards & Smart Sommelier",
+  "northStar": "La Caja que Cobra Vida",
+  "direction": "warm-playful-premium",
+  "colors": {
+    "coral": "#F15B43",
+    "teal": "#0B4F56",
+    "rice": "#F4EBDD",
+    "ink": "#173B3D"
+  },
+  "type": {
+    "display": "Barlow Condensed",
+    "body": "Nunito Sans"
+  },
+  "avatar": {
+    "name": "Roko",
+    "asset": "/brand/roko-avatar-source.png",
+    "role": "functional host"
+  },
+  "constraints": [
+    "No casino-neon styling",
+    "No invented menu items or metrics",
+    "Mocktails are clearly labeled concepts",
+    "Permanent provider credentials never enter the browser bundle"
+  ]
+}
