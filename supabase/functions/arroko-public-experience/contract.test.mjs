@@ -21,6 +21,12 @@ const reward = parseRequest({
 });
 assert.equal(reward.rewardKey, 'p4');
 
+const redeem = parseRequest({
+  action: 'reward.redeem', claim_id: '11111111-2222-4333-8444-555555555555',
+});
+assert.equal(redeem.claimId, '11111111-2222-4333-8444-555555555555');
+assert.throws(() => parseRequest({ action: 'reward.redeem', claim_id: 'not-a-uuid' }), /invalid_claim_id/);
+
 const game = parseRequest({
   action: 'game.complete', visit_token: 'x'.repeat(44), game_key: 'roll-builder',
   child_alias: 'Sam', age_band: '6-8', idempotency_key: 'session-123', score: 840,

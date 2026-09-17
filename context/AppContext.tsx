@@ -1,10 +1,9 @@
 import React, { createContext, useState, useContext, useCallback, ReactNode, useEffect } from 'react';
 import type { View, Participant, Prize, SpinResult } from '../types';
-import { supabase } from '../supabase';
 import { PRIZES } from '../constants';
 import { trackInteraction } from '../lib/tracking';
 import { useAuth } from '../lib/useAuth';
-import { claimReward, startCheckin } from '../lib/arrokoExperience';
+import { claimReward, redeemReward, startCheckin } from '../lib/arrokoExperience';
 
 // New structured error type for detailed feedback
 interface SupabaseErrorDetails {
@@ -223,59 +222,16 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const handleRedeem = useCallback(async (code: string): Promise<{ success: boolean; message: string; prize?: Prize }> => {
     trackInteraction('redeem_attempt', participant?.id ?? null, { code });
-    const { data: spinToRedeem, error: fetchError } = await supabase!
-        .from('spins')
-        .select('*')
-        .eq('id', code)
-        .single();
-
-    if (fetchError || !spinToRedeem) {
-      if(fetchError) window.dispatchEvent(new CustomEvent('supabaseError', { detail: {
-        table: 'spins',
-        operation: 'SELECT',
-        error: fetchError,
-        source: 'handleRedeem (fetch)'
-      }}));
-      trackInteraction('redeem_failure', participant?.id ?? null, { code, reason: 'invalid_code' });
-      return { success: false, message: 'Código QR inválido.' };
+    try {
+      const result = await redeemReward(code.trim());
+      const prize = PRIZES.find(p => p.id === result.reward_key);
+      trackInteraction('redeem_success', participant?.id ?? null, { code, prize_id: prize?.id });
+      return { success: true, message: '¡Premio canjeado con éxito!', prize };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Error al canjear el premio.';
+      trackInteraction('redeem_failure', participant?.id ?? null, { code, reason: message });
+      return { success: false, message };
     }
-    if (spinToRedeem.redeemed) {
-      trackInteraction('redeem_failure', participant?.id ?? null, { code, reason: 'already_redeemed' });
-      return { success: false, message: 'Este premio ya ha sido canjeado.' };
-    }
-    // Check expiration
-    if (spinToRedeem.expires_at && new Date(spinToRedeem.expires_at) < new Date()) {
-        trackInteraction('redeem_failure', participant?.id ?? null, { code, reason: 'expired' });
-        return { success: false, message: 'Este cupón ha expirado.' };
-    }
-
-    // Check next visit (not same day)
-    const spinDate = new Date(spinToRedeem.created_at);
-    const now = new Date();
-    if (spinDate.toDateString() === now.toDateString()) {
-         trackInteraction('redeem_failure', participant?.id ?? null, { code, reason: 'same_day' });
-         return { success: false, message: 'Solo puedes canjear este cupón en tu próxima visita (a partir de mañana).' };
-    }
-
-    const { error: updateError } = await supabase!
-        .from('spins')
-        .update({ redeemed: true })
-        .eq('id', code);
-
-    if (updateError) {
-        window.dispatchEvent(new CustomEvent('supabaseError', { detail: {
-            table: 'spins',
-            operation: 'UPDATE',
-            error: updateError,
-            source: 'handleRedeem (update)'
-        } }));
-        trackInteraction('redeem_failure', participant?.id ?? null, { code, reason: 'update_error' });
-        return { success: false, message: 'Error al canjear el premio.' };
-    }
-
-    const prize = PRIZES.find(p => p.id === spinToRedeem.prize_id);
-    trackInteraction('redeem_success', participant?.id ?? null, { code, prize_id: prize?.id });
-    return { success: true, message: '¡Premio canjeado con éxito!', prize };
   }, [participant?.id]);
 
   const navigateToProtectedView = (view: View) => {

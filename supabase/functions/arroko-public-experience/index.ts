@@ -36,7 +36,7 @@ function safeError(error: unknown) {
   if (error instanceof PublicExperienceError) return { code: error.code, status: error.status };
   if (error && typeof error === 'object' && 'message' in error) {
     const message = String(error.message);
-    const known = ['checkin_point_not_found','invalid_public_identifier','visit_not_found_or_expired','child_consent_required','game_not_available','reward_not_available','checkin_rate_limited'];
+    const known = ['checkin_point_not_found','invalid_public_identifier','visit_not_found_or_expired','child_consent_required','game_not_available','reward_not_available','checkin_rate_limited','claim_not_found','claim_already_redeemed','claim_expired','claim_same_day','claim_not_redeemable'];
     const code = known.find((item) => message.includes(item));
     if (code) return { code, status: code === 'checkin_rate_limited' ? 429 : code.includes('not_found') || code.includes('expired') ? 404 : 400 };
   }
@@ -94,6 +94,14 @@ Deno.serve(async (request) => {
       });
       if (error) throw error;
       return json(request, 201, { ok: true, ...data, visit_token: visitToken });
+    }
+
+    if (input.action === 'reward.redeem') {
+      const { data, error } = await supabase.rpc('arroko_public_reward_redeem', {
+        p_claim_id: input.claimId,
+      });
+      if (error) throw error;
+      return json(request, 200, { ok: true, ...data });
     }
 
     const tokenHash = await sha256Hex(input.visitToken);

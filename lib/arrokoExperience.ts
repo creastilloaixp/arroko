@@ -41,6 +41,12 @@ function publicMessage(code?: string) {
     reward_not_available: 'Esta recompensa no está disponible en este momento.',
     public_experience_not_configured: 'El check-in todavía no está habilitado.',
     checkin_rate_limited: 'Ya registramos varias visitas en pocos minutos. Espera un momento o pide ayuda al equipo.',
+    invalid_claim_id: 'Código QR inválido.',
+    claim_not_found: 'Código QR inválido.',
+    claim_already_redeemed: 'Este premio ya ha sido canjeado.',
+    claim_expired: 'Este cupón ha expirado.',
+    claim_same_day: 'Solo puedes canjear este cupón en tu próxima visita (a partir de mañana).',
+    claim_not_redeemable: 'Este cupón no se puede canjear.',
   };
   return messages[code || ''] || 'No pudimos guardar la actividad. Intenta nuevamente.';
 }
@@ -97,4 +103,8 @@ export async function claimReward(rewardKey: string) {
 
 export function hasActiveVisit() {
   return Boolean(sessionStorage.getItem(VISIT_TOKEN_KEY));
+}
+
+export async function redeemReward(claimId: string) {
+  return call({ action: 'reward.redeem', claim_id: claimId });
 }

@@ -83,6 +83,13 @@ export function parseRequest(value) {
     if (!idempotencyKey || idempotencyKey.length < 8) throw new PublicExperienceError('idempotency_key_required');
     return { action, visitToken, rewardKey, idempotencyKey };
   }
+  if (action === 'reward.redeem') {
+    const claimId = text(value.claim_id, 40);
+    if (!claimId.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)) {
+      throw new PublicExperienceError('invalid_claim_id');
+    }
+    return { action, claimId };
+  }
   throw new PublicExperienceError('unsupported_action');
 }
 

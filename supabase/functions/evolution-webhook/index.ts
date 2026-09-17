@@ -28,6 +28,29 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// --- Webhook Authentication ---
+// Evolution API is configured to send this shared secret back on every webhook
+// call (see EVOLUTION_WEBHOOK_SECRET in .env.example). Without this check, anyone
+// who discovers the function URL could inject fake messages, create reservations,
+// and use this endpoint as an open relay to send WhatsApp messages to any number
+// using the restaurant's Evolution API credentials.
+function timingSafeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let mismatch = 0;
+  for (let i = 0; i < a.length; i += 1) {
+    mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return mismatch === 0;
+}
+
+function isAuthorizedWebhookRequest(req: Request): boolean {
+  const expectedSecret = Deno.env.get('EVOLUTION_WEBHOOK_SECRET') || '';
+  if (!expectedSecret) return false;
+  const suppliedSecret = req.headers.get('x-webhook-secret') || '';
+  if (!suppliedSecret) return false;
+  return timingSafeEqual(expectedSecret, suppliedSecret);
+}
+
 // --- Function Declarations for Gemini ---
 const createReservationDeclaration: FunctionDeclaration = {
     name: 'createReservation',
@@ -61,6 +84,14 @@ serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
+  }
+
+  if (!isAuthorizedWebhookRequest(req)) {
+    console.warn('Rejected webhook call with missing or invalid x-webhook-secret header.');
+    return new Response(JSON.stringify({ error: 'unauthorized' }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 401,
+    });
   }
 
   try {
@@ -171,10 +202,14 @@ Tu propósito principal es gestionar reservaciones para los clientes utilizando 
                     else result = { success: true, reservationId: data.id };
                 } else if (call.name === 'checkReservation') {
                      const args = call.args;
+                     // Use .ilike() instead of interpolating into .or() — the latter
+                     // parses its argument as a raw PostgREST filter expression, so an
+                     // attacker-controlled name containing "," or ")" could inject
+                     // additional filter clauses.
                      const { data, error } = await supabaseClient.from('reservations')
                         .select('*')
                         .eq('phone_number', phoneNumber)
-                        .or(`customer_name.ilike.%${args.customer_name}%`)
+                        .ilike('customer_name', `%${String(args.customer_name || '').slice(0, 120)}%`)
                         .order('created_at', { ascending: false });
 
                      if(error) result = { found: false, error: error.message };
